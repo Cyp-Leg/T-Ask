@@ -1,22 +1,8 @@
-/* eslint-disable  func-names */
-/* eslint quote-props: ["error", "consistent"]*/
-/**
- * This sample demonstrates a simple skill built with the Amazon Alexa Skills
- * nodejs skill development kit.
- * This sample supports multiple lauguages. (en-US, en-GB, de-DE).
- * The Intent Schema, Custom Slots and Sample Utterances for this skill, as well
- * as testing instructions are located at https://github.com/alexa/skill-sample-nodejs-fact
- **/
-
 'use strict';
 const Alexa = require('alexa-sdk');
+var https = require('https');
+const querystring = require('querystring');
 
-//=========================================================================================================================================
-//TODO: The items below this comment need your attention.
-//=========================================================================================================================================
-
-//Replace with your app ID (OPTIONAL).  You can find this value at the top of your skill's page on http://developer.amazon.com.
-//Make sure to enclose your value in quotes, like this: const APP_ID = 'amzn1.ask.skill.bb4045e6-b3e8-4133-b650-72923c5980f1';
 const APP_ID = "amzn1.ask.skill.f658c1a8-de0a-44dd-9a3d-6ceb6d41df1c";
 
 const SKILL_NAME = 'T-Ask';
@@ -25,28 +11,38 @@ const HELP_MESSAGE = 'You can say tell me a space fact, or, you can say exit... 
 const HELP_REPROMPT = 'What can I help you with?';
 const STOP_MESSAGE = 'Goodbye!';
 
-//=========================================================================================================================================
-//TODO: Replace this data with your own.  You can find translations of this data at http://github.com/alexa/skill-sample-node-js-fact/data
-//=========================================================================================================================================
-const data = [
-    'A year on Mercury is just 88 days long.',
-    'Despite being farther from the Sun, Venus experiences higher temperatures than Mercury.',
-    'Venus rotates counter-clockwise, possibly because of a collision in the past with an asteroid.',
-    'On Mars, the Sun appears about half the size as it does on Earth.',
-    'Earth is the only planet not named after a god.',
-    'Jupiter has the shortest day of all the planets.',
-    'The Milky Way galaxy will collide with the Andromeda Galaxy in about 5 billion years.',
-    'The Sun contains 99.86% of the mass in the Solar System.',
-    'The Sun is an almost perfect sphere.',
-    'A total solar eclipse can happen once every 1 to 2 years. This makes them a rare event.',
-    'Saturn radiates two and a half times more energy into space than it receives from the sun.',
-    'The temperature inside the Sun can reach 15 million degrees Celsius.',
-    'The Moon is moving approximately 3.8 cm away from our planet every year.',
-];
-
-//=========================================================================================================================================
-//Editing anything below this line might break your skill.
-//=========================================================================================================================================
+function PostCode(handler, task) {
+    // Build the post string from an object
+    var post_data = querystring.stringify({
+        'text': task,
+        'type': 'todo'
+    });
+  
+    // An object of options to indicate where to post to
+    var post_options = {
+        hostname: 'habitica.com',
+        path: '/api/v3/tasks/user',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'x-api-user': '5480fd21-608d-41c5-8ec2-7fd555a823cf',
+            'x-api-key': "dac194db-cd04-446e-a748-9218150b05bc"
+        }
+    };
+  
+    // Set up the request
+    var post_req = https.request(post_options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            handler.response.speak("La tache : " + task + " a bien été ajoutée !");
+            handler.emit(':responseReady');
+        });
+    });
+    // post the data
+    post_req.write(post_data);
+    post_req.end();
+  
+  }
 
 const handlers = {
     'LaunchRequest': function () {
@@ -56,7 +52,7 @@ const handlers = {
     'TaskIntent': function () {
         var task = this.event.request.intent.slots.task.value
         if(task){
-            this.response.speak(task);
+            PostCode(this, task);
         }
         else{
             this.response.speak("No tasks");
