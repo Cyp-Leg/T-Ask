@@ -1,8 +1,6 @@
 'use strict';
 const Alexa = require('alexa-sdk');
-var https = require('https');
-const querystring = require('querystring');
-
+const Task = require('Task');
 const APP_ID = "amzn1.ask.skill.f658c1a8-de0a-44dd-9a3d-6ceb6d41df1c";
 
 const SKILL_NAME = 'T-Ask';
@@ -11,38 +9,6 @@ const HELP_MESSAGE = 'You can say tell me a space fact, or, you can say exit... 
 const HELP_REPROMPT = 'What can I help you with?';
 const STOP_MESSAGE = 'Goodbye!';
 
-function PostCode(handler, task) {
-    // Build the post string from an object
-    var post_data = querystring.stringify({
-        'text': task,
-        'type': 'todo'
-    });
-  
-    // An object of options to indicate where to post to
-    var post_options = {
-        hostname: 'habitica.com',
-        path: '/api/v3/tasks/user',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'x-api-user': '5480fd21-608d-41c5-8ec2-7fd555a823cf',
-            'x-api-key': "dac194db-cd04-446e-a748-9218150b05bc"
-        }
-    };
-  
-    // Set up the request
-    var post_req = https.request(post_options, function(res) {
-        res.setEncoding('utf8');
-        res.on('data', function (chunk) {
-            handler.response.speak("La tache : " + task + " a bien été ajoutée !");
-            handler.emit(':responseReady');
-        });
-    });
-    // post the data
-    post_req.write(post_data);
-    post_req.end();
-  
-  }
 
 const handlers = {
     'LaunchRequest': function () {
@@ -51,14 +17,22 @@ const handlers = {
     },
     'TaskIntent': function () {
         var task = this.event.request.intent.slots.task.value
+        let that = this;
         if(task){
-            PostCode(this, task);
+            Task.addTask(task)
+            .then(function (response) {
+                that.response.speak("La tache : " + task + " a bien été ajoutée !");
+                that.emit(':responseReady');
+            })
+            .catch(function (error) {
+                that.response.speak("La tache : " + task + " n'a pas été ajoutée...");
+                that.emit(':responseReady');
+            });
         }
         else{
             this.response.speak("No tasks");
+            this.emit(':responseReady');
         }
-        
-        this.emit(':responseReady');
     },
     'AMAZON.HelpIntent': function () {
         const speechOutput = HELP_MESSAGE;
