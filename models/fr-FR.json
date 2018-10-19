@@ -1,0 +1,51 @@
+{
+  "interactionModel": {
+      "languageModel": {
+          "invocationName": "habitica",
+          "intents": [
+              {
+                  "name": "AMAZON.CancelIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.HelpIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.StopIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.NavigateHomeIntent",
+                  "samples": []
+              },
+              {
+                  "name": "TaskIntent",
+                  "slots": [
+                      {
+                          "name": "task",
+                          "type": "AMAZON.SearchQuery"
+                      }
+                  ],
+                  "samples": [
+                      "mange des frittes",
+                      "test",
+                      "rajoute la tache {task}",
+                      "rappel moi",
+                      "ajoute la tache",
+                      "ajoute une tache",
+                      "tache"
+                  ]
+              },
+              {
+                  "name": "HabitIntent",
+                  "slots": [],
+                  "samples": [
+                      "rajoute habitude"
+                  ]
+              }
+          ],
+          "types": []
+      }
+  }
+}
