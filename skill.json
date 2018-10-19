@@ -10,7 +10,7 @@
     "apis": {
       "custom": {
         "endpoint": {
-          "sourceDir": ".\\lambda\\us-east-1_Task-lambda"
+          "sourceDir": ".\\lambda\\custom"
         },
         "interfaces": []
       }
