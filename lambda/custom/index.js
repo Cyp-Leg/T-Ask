@@ -1,18 +1,17 @@
-'use strict';
 const Alexa = require('alexa-sdk');
-const Task = require('Task');
+const Task = require('./models/Task');
+const Habit = require('./models/Habit');
+
 const APP_ID = "amzn1.ask.skill.f658c1a8-de0a-44dd-9a3d-6ceb6d41df1c";
 
-const SKILL_NAME = 'T-Ask';
-const GET_FACT_MESSAGE = "Here's your fact: ";
 const HELP_MESSAGE = 'You can say tell me a space fact, or, you can say exit... What can I help you with?';
 const HELP_REPROMPT = 'What can I help you with?';
 const STOP_MESSAGE = 'Goodbye!';
 
-
 const handlers = {
     'LaunchRequest': function () {
-        this.response.speak("Que voulez vous faire ?").listen("Je n'ai pas compris. Réessayez ?");
+        this.handler.state == 
+        this.response.speak("Que voulez-vous demander à Habitica ?").listen("Je n'ai pas compris. Réessayez ?");
         this.emit(':responseReady');
     },
     'TaskIntent': function () {
@@ -30,7 +29,26 @@ const handlers = {
             });
         }
         else{
-            this.response.speak("No tasks");
+            this.response.speak("No task");
+            this.emit(':responseReady');
+        }
+    },
+    'HabitIntent': function () {
+        var habit = this.event.request.intent.slots.habit.value
+        let that = this;
+        if(habit){
+            Habit.addHabit(habit)
+            .then(function (response) {
+                that.response.speak("L'habitude : " + habit + " a bien été ajoutée !");
+                that.emit(':responseReady');
+            })
+            .catch(function (error) {
+                that.response.speak("L'habitude : " + habit + " n'a pas été ajoutée...");
+                that.emit(':responseReady');
+            });
+        }
+        else{
+            this.response.speak("No habit");
             this.emit(':responseReady');
         }
     },
