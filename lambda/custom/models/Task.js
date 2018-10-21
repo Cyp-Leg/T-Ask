@@ -15,9 +15,19 @@ class Task {
     addTask(task) {
         let data = querystring.stringify({
             text: task,
-            type: 'todo'
+            type: 'todo',
+            alias: task
         });
         return axios.post('https://habitica.com/api/v3/tasks/user', data, {
+            headers: this.headers
+        });
+    }
+
+    deleteTask(task) {
+        let data = querystring.stringify({
+            taskId: task,
+        });
+        return axios.delete('https://habitica.com/api/v3/tasks/'+ task, {
             headers: this.headers
         });
     }

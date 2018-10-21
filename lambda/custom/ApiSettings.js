@@ -1,6 +1,6 @@
 const ApiSettings = {
-    'user': '5480fd21-608d-41c5-8ec2-7fd555a823cf',
-    'key': "dac194db-cd04-446e-a748-9218150b05bc"
+    'user': '151879e9-271b-46ac-aee4-b3d51c4927c9',
+    'key': "6c768112-eb4d-4f07-bbe7-2c874b365249"
 }
 
 module.exports = ApiSettings;

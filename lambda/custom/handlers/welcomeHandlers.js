@@ -28,6 +28,22 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
         }
     },
 
+    DelTaskIntent() {
+        var task = this.event.request.intent.slots.task.value
+        let that = this;
+        if(task){
+            Task.deleteTask(task)
+            .then(function(response){
+                that.response.speak("La tache : " + task + " a bien été supprimée !");
+                that.emit(':responseReady');
+            })
+            .catch(function(error){
+                that.response.speak("La tache : " + task + " n'a pas été supprimée... Erreur : " + error);
+                that.emit(':responseReady');
+            })
+        }
+    },
+
     // ==== Unhandled
     Unhandled() {
         let speechOutput = "Erreur on dirait";

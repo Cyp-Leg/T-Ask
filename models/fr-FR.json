@@ -38,6 +38,18 @@
                     ]
                 },
                 {
+                    "name": "DelTaskIntent",
+                    "slots": [
+                        {
+                            "name": "task",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "supprime la tache {task}"
+                    ]
+                },
+                {
                     "name": "HabitIntent",
                     "slots": [
                         {
