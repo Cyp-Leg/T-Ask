@@ -1,6 +1,7 @@
 const Alexa = require("alexa-sdk");
 const config = require("../config");
 const Task = require('../models/Task');
+const User = require('../models/User');
 
 const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
     Welcome() {

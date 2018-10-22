@@ -16,7 +16,7 @@ class User {
         let data = querystring.stringify({
             type: 'todo',
         });
-        return axios.get('https://habitica.com/api/v3/tasks/user', data, {
+        return axios.get('https://habitica.com/api/v3/tasks/user', {
             headers: this.headers
         }); 
     }
