@@ -34,9 +34,9 @@ class Task {
         });
     }
 
-    scoreUp(task) {
+    scoreUp(taskId) {
         let data = querystring.stringify({});
-        return axios.post("https://habitica.com/api/v3/tasks/"+ task +"/score/up", data, {
+        return axios.post("https://habitica.com/api/v3/tasks/"+ taskId +"/score/up", data, {
             headers: this.headers
         });
     }

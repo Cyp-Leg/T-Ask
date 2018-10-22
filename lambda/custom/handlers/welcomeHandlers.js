@@ -36,6 +36,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
                 let todos = response.data.data;
                 let todosText = todos.map(t => t.text);
                 let bestMatch = stringSimilarity.findBestMatch(task, todosText).bestMatch;
+
                 if(bestMatch.rating > 0.8){
                     let taskId = todos.filter(t => t.text == bestMatch.target)[0].id;
                     Task.deleteTask(taskId)
@@ -44,8 +45,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
-                    })
-                    
+                    });
                 }
                 else {
                     that.emit(':ask', "La tache n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
@@ -59,15 +59,32 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
     },
 
     ScoreUpIntent() {
-        let taskId = this.event.request.intent.slots.task.value;
+        var task = this.event.request.intent.slots.task.value
         let that = this;
-        if(taskId){
-            Task.scoreUp(taskId)
+        if(task){
+            Task.getTodos(task)
             .then(function(response){
-                that.emit(":tell", response.data.success)
+                let todos = response.data.data;
+                let todosText = todos.map(t => t.text);
+                let bestMatch = stringSimilarity.findBestMatch(task, todosText).bestMatch;
+
+                if(bestMatch.rating > 0.8){
+                    let taskId = todos.filter(t => t.text == bestMatch.target)[0].id;
+                    Task.scoreUp(taskId)
+                    .then(function(response){
+                        that.emit(':tell', "La tache : "+ bestMatch.target +" a bien été validée !");
+                    })
+                    .catch(function(error){
+                        that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
+                    });
+                }
+                else {
+                    that.emit(':ask', "La tache n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
+                }
+                
             })
             .catch(function(error){
-                that.emit(":ask", "Habitica n'a pas pu valider la tâche. Réessayez.", error.message)
+                that.emit(':tell', "Impossible de récupérer vos tâches.");
             })
         }
     },
