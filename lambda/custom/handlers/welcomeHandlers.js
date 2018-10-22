@@ -8,23 +8,20 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
         this.emit(":responseReady");
     },
 
-    TaskIntent() {
+    AddTaskIntent() {
         var task = this.event.request.intent.slots.task.value
         let that = this;
         if(task){
             Task.addTask(task)
             .then(function (response) {
-                that.response.speak("La tache : " + task + " a bien été ajoutée !").listen();
-                that.emit(':responseReady');
+                that.emit(':ask', "La tache : " + task + " a bien été ajoutée !", "Autre ?");
             })
             .catch(function (error) {
-                that.response.speak("La tache : " + task + " n'a pas été ajoutée...").listen();
-                that.emit(':responseReady');
+                that.emit(':ask', "La tache : " + task + " n'a pas été ajoutée...", error.message);
             });
         }
         else{
-            this.response.speak("No task").listen();
-            this.emit(':responseReady');
+            this.emit(':ask', "Vous n'avez spécifiez aucune tâche.", "Aucune tâche spécifiée.");
         }
     },
 

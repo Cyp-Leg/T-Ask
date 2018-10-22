@@ -5,7 +5,7 @@ const config = require('./config');
 
 const welcomeHandlers = require('./handlers/welcomeHandlers');
 
-const APP_ID = "amzn1.ask.skill.f570c511-dd4c-4579-b892-6f09ebe4ab0a";
+const APP_ID = "amzn1.ask.skill.f658c1a8-de0a-44dd-9a3d-6ceb6d41df1c";
 
 const HELP_MESSAGE = 'You can say tell me a space fact, or, you can say exit... What can I help you with?';
 const HELP_REPROMPT = 'What can I help you with?';
@@ -22,17 +22,14 @@ const handlers = {
         if(habit){
             Habit.addHabit(habit)
             .then(function (response) {
-                that.response.speak("L'habitude : " + habit + " a bien été ajoutée !");
-                that.emit(':responseReady');
+                that.emit(':tell', "L'habitude : " + habit + " a bien été ajoutée !");
             })
             .catch(function (error) {
-                that.response.speak("L'habitude : " + habit + " n'a pas été ajoutée...");
-                that.emit(':responseReady');
+                that.emit(':tell', "L'habitude : " + habit + " n'a pas été ajoutée...");
             });
         }
         else{
-            this.response.speak("No habit");
-            this.emit(':responseReady');
+            this.emit(':tell', "No habit");
         }
     },
     'AMAZON.HelpIntent': function () {
