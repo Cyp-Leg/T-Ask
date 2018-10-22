@@ -1,51 +1,90 @@
 {
-  "interactionModel": {
-      "languageModel": {
-          "invocationName": "habitica",
-          "intents": [
-              {
-                  "name": "AMAZON.CancelIntent",
-                  "samples": []
-              },
-              {
-                  "name": "AMAZON.HelpIntent",
-                  "samples": []
-              },
-              {
-                  "name": "AMAZON.StopIntent",
-                  "samples": []
-              },
-              {
-                  "name": "AMAZON.NavigateHomeIntent",
-                  "samples": []
-              },
-              {
-                  "name": "TaskIntent",
-                  "slots": [
-                      {
-                          "name": "task",
-                          "type": "AMAZON.SearchQuery"
-                      }
-                  ],
-                  "samples": [
-                      "mange des frittes",
-                      "test",
-                      "rajoute la tache {task}",
-                      "rappel moi",
-                      "ajoute la tache",
-                      "ajoute une tache",
-                      "tache"
-                  ]
-              },
-              {
-                  "name": "HabitIntent",
-                  "slots": [],
-                  "samples": [
-                      "rajoute habitude"
-                  ]
-              }
-          ],
-          "types": []
-      }
-  }
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "habitica",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "Qu'est-ce que je peux faire",
+                        "Aide moi"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "C'est tout",
+                        "Merci",
+                        "Stop",
+                        "Au revoir",
+                        "Quitter"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": [
+                        "Recommence",
+                        "Reviens",
+                        "Je veux faire autre chose"
+                    ]
+                },
+                {
+                    "name": "AddTaskIntent",
+                    "slots": [
+                        {
+                            "name": "task",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "rajoute le todo {task}",
+                        "ajoute le todo {task}",
+                        "ajoute la tache {task}",
+                        "rajoute la tache {task}"
+                    ]
+                },
+                {
+                    "name": "DelTaskIntent",
+                    "slots": [
+                        {
+                            "name": "task",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "supprime la tache {task}"
+                    ]
+                },
+                {
+                    "name": "HabitIntent",
+                    "slots": [
+                        {
+                            "name": "habit",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "rajoute l'habitude {habit}"
+                    ]
+                },
+                {
+                    "name": "ScoreUpIntent",
+                    "slots": [
+                        {
+                            "name": "task",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "valider la tache {task}"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
 }
