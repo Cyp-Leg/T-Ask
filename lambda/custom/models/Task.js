@@ -16,7 +16,7 @@ class Task {
         let data = querystring.stringify({
             text: task,
             type: 'todo',
-            alias: task
+            alias: task.replace(" ","")
         });
         return axios.post('https://habitica.com/api/v3/tasks/user', data, {
             headers: this.headers
@@ -24,7 +24,8 @@ class Task {
     }
 
     deleteTask(task) {
-        return axios.delete('https://habitica.com/api/v3/tasks/'+ task, {
+        let data = task.replace(" ","")
+        return axios.delete('https://habitica.com/api/v3/tasks/'+ data, {
             headers: this.headers
         });
     }

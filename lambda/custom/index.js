@@ -2,10 +2,11 @@ const Alexa = require('alexa-sdk');
 const Task = require('./models/Task');
 const Habit = require('./models/Habit');
 const config = require('./config');
+const apiSettings = require('ApiSettings');
 
 const welcomeHandlers = require('./handlers/welcomeHandlers');
 
-const APP_ID = "amzn1.ask.skill.f658c1a8-de0a-44dd-9a3d-6ceb6d41df1c";
+const APP_ID = apiSettings.appId;
 
 const HELP_MESSAGE = 'You can say tell me a space fact, or, you can say exit... What can I help you with?';
 const HELP_REPROMPT = 'What can I help you with?';

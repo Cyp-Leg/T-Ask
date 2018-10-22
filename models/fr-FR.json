@@ -82,6 +82,13 @@
                     "samples": [
                         "valider la tache {task}"
                     ]
+                },
+                {
+                    "name": "GetTaskIntent",
+                    "slots": [],
+                    "samples": [
+                        "donne moi mes taches"
+                    ]
                 }
             ],
             "types": []
