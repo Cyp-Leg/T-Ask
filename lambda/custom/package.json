@@ -6,6 +6,7 @@
     "alexa-sdk": "^1.0.25",
     "axios": "^0.18.0",
     "http": "0.0.0",
-    "querystring": "^0.2.0"
+    "querystring": "^0.2.0",
+    "string-similarity": "^2.0.0"
   }
 }
