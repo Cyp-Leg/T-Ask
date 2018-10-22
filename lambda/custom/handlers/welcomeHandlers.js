@@ -55,6 +55,18 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
         }
     },
 
+    GetTaskIntent(){
+        let that = this;
+        User.getTasks()
+        .then(function(response){
+            that.response.speak("Voici votre liste de tâches : ");
+            that.emit(':responseReady')
+        })
+        .catch(function(error){
+            that.response.speak("Impossible d'accéder à la liste de vos taches... Erreur : " + error);
+        })
+    },
+
     // ==== Unhandled
     Unhandled() {
         let speechOutput = "Erreur on dirait";
