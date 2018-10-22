@@ -70,6 +70,18 @@
                     "samples": [
                         "rajoute l'habitude {habit}"
                     ]
+                },
+                {
+                    "name": "ScoreUpIntent",
+                    "slots": [
+                        {
+                            "name": "task",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "valider la tache {task}"
+                    ]
                 }
             ],
             "types": []

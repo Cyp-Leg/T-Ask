@@ -41,6 +41,20 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
         }
     },
 
+    ScoreUpIntent() {
+        let taskId = this.event.request.intent.slots.task.value;
+        let that = this;
+        if(taskId){
+            Task.scoreUp(taskId)
+            .then(function(response){
+                that.emit(":tell", response.data.success)
+            })
+            .catch(function(error){
+                that.emit(":ask", "Habitica n'a pas pu valider la tâche. Réessayez.", error.message)
+            })
+        }
+    },
+
     // ==== Unhandled
     Unhandled() {
         let speechOutput = "Erreur on dirait";

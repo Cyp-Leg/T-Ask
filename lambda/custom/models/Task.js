@@ -24,10 +24,14 @@ class Task {
     }
 
     deleteTask(task) {
-        let data = querystring.stringify({
-            taskId: task,
-        });
         return axios.delete('https://habitica.com/api/v3/tasks/'+ task, {
+            headers: this.headers
+        });
+    }
+
+    scoreUp(task) {
+        let data = querystring.stringify({});
+        return axios.post("https://habitica.com/api/v3/tasks/"+ task +"/score/up", data, {
             headers: this.headers
         });
     }
