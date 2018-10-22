@@ -1,4 +1,4 @@
 .ask
 node_modules
-./skill.json
-./lambda/custom/ApiSettings.js
+skill.json
+lambda/custom/ApiSettings.js
