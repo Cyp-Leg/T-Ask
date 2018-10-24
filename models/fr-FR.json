@@ -92,7 +92,6 @@
                         "Enlève l'habitude {habit}"
                     ]
                 },
-
                 {
                     "name": "ScoreUpTodoIntent",
                     "slots": [
@@ -137,6 +136,54 @@
                     ],
                     "samples": [
                         "Invalide l'habitude {habit}"
+                    ]
+                },
+                {
+                    "name": "AddDailyIntent",
+                    "slots": [
+                        {
+                            "name": "daily",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "Ajoute la quotidienne {daily}"
+                    ]
+                },
+                {
+                    "name": "DelDailyIntent",
+                    "slots": [
+                        {
+                            "name": "daily",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "Supprime la quotidienne {daily}"
+                    ]
+                },
+                {
+                    "name": "ScoreUpDailyIntent",
+                    "slots": [
+                        {
+                            "name": "daily",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "Valide la quotidienne {daily}"
+                    ]
+                },
+                {
+                    "name": "ScoreDownDailyIntent",
+                    "slots": [
+                        {
+                            "name": "daily",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "Annule la quotidienne {daily}"
                     ]
                 }
             ],

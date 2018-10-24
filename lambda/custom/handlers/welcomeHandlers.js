@@ -2,6 +2,7 @@ const Alexa = require("alexa-sdk");
 const config = require("../config");
 const Todo = require('../models/Todo');
 const User = require('../models/User');
+const Daily = require('../models/Daily');
 const Habit = require('../models/Habit');
 var stringSimilarity = require('string-similarity');
 
@@ -202,6 +203,125 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
     },
 
 
+    
+    //DAILYS
+    AddDailyIntent() {
+        var daily = this.event.request.intent.slots.daily.value
+        let that = this;
+        if(daily){
+            Daily.addDaily(daily)
+            .then(function (response) {
+                that.emit(':tell', "La tâche quotidienne : " + daily + " a bien été ajoutée !");
+            })
+            .catch(function (error) {
+                that.emit(':tell', "La tâche quotidienne : " + daily + " n'a pas été ajoutée...");
+            });
+        }
+        else{
+            this.emit(':tell', "Aucune tâche quotidienne ajoutée");
+        }
+    },
+
+    DelDailyIntent() {
+        var daily = this.event.request.intent.slots.daily.value
+        let that = this;
+        if(daily){
+            Daily.getDailys(daily)
+            .then(function(response){
+                let dailys = response.data.data;
+                let dailysText = dailys.map(h => h.text);
+                let bestMatch = stringSimilarity.findBestMatch(daily, dailysText).bestMatch;
+
+                if(bestMatch.rating > 0.8){
+                    let dailyId = dailys.filter(h => h.text == bestMatch.target)[0].id;
+                    Daily.deleteDaily(dailyId)
+                    .then(function(response){
+                        that.emit(':tell', "La tâche quotidienne : "+ bestMatch.target +" a bien été supprimée !");
+                    })
+                    .catch(function(error){
+                        that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
+                    });
+                }
+                else {
+                    that.emit(':ask', "La tâche quotidienne n'a pas été trouvée. Peut-être que vous vouliez dire : " + bestMatch.target + " ?", "");
+                }
+
+            })
+            .catch(function(error){
+                that.emit(':tell', "Impossible de récupérer vos tâches quotidiennes." + error);
+            })
+        }
+    },
+
+
+
+    ScoreUpDailyIntent() {
+        var task = this.event.request.intent.slots.daily.value
+        let that = this;
+        if(task){
+            Daily.getDailys(task)
+            .then(function(response){
+                let dailys = response.data.data;
+                let dailyText = dailys.map(h => h.text);
+                let bestMatch = stringSimilarity.findBestMatch(task, dailyText).bestMatch;
+
+                if(bestMatch.rating > 0.8){
+                    let taskId = dailys.filter(h => h.text == bestMatch.target)[0].id;
+                    Todo.scoreUp(taskId)
+                    .then(function(response){
+                        that.emit(':tell', "Le score de la quotidienne : "+ bestMatch.target +" a bien été incrémenté !");
+                    })
+                    .catch(function(error){
+                        that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
+                    });
+                }
+                else {
+                    that.emit(':ask', "La quotidienne n'a pas été trouvée. Peut-être que vous vouliez dire : " + bestMatch.target + " ?", "");
+                }
+
+            })
+            .catch(function(error){
+                that.emit(':tell', "Impossible de récupérer vos quotidiennes.");
+            })
+        }
+    },
+
+
+    ScoreDownDailyIntent() {
+        var task = this.event.request.intent.slots.daily.value
+        let that = this;
+        if(task){
+            Daily.getDailys(task)
+            .then(function(response){
+                let dailys = response.data.data;
+                let dailyText = dailys.map(h => h.text);
+                let bestMatch = stringSimilarity.findBestMatch(task, dailyText).bestMatch;
+
+                if(bestMatch.rating > 0.8){
+                    let taskId = dailys.filter(h => h.text == bestMatch.target)[0].id;
+                    Todo.scoreDown(taskId)
+                    .then(function(response){
+                        that.emit(':tell', "Le score de la quotidienne : "+ bestMatch.target +" a bien été décrémentée !");
+                    })
+                    .catch(function(error){
+                        that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
+                    });
+                }
+                else {
+                    that.emit(':ask', "La quotidienne n'a pas été trouvée. Peut-être que vous vouliez dire : " + bestMatch.target + " ?", "");
+                }
+
+            })
+            .catch(function(error){
+                that.emit(':tell', "Impossible de récupérer vos quotidiennes.");
+            })
+        }
+    },
+
+    
+
+    
+
     GetTodoIntent(){
         let that = this;
         Todo.getTodos()
@@ -214,6 +334,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
         })
     },
 
+    
 
     // ==== Unhandled
     Unhandled() {
