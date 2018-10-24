@@ -18,22 +18,6 @@ const handlers = {
         this.handler.state = config.WELCOME_STATE
         this.emitWithState('Welcome');
     },
-    'HabitIntent': function () {
-        var habit = this.event.request.intent.slots.habit.value
-        let that = this;
-        if(habit){
-            Habit.addHabit(habit)
-            .then(function (response) {
-                that.emit(':tell', "L'habitude : " + habit + " a bien été ajoutée !");
-            })
-            .catch(function (error) {
-                that.emit(':tell', "L'habitude : " + habit + " n'a pas été ajoutée...");
-            });
-        }
-        else{
-            this.emit(':tell', "No habit");
-        }
-    },
     'AMAZON.HelpIntent': function () {
         const speechOutput = HELP_MESSAGE;
         const reprompt = HELP_REPROMPT;

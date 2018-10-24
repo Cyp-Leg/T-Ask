@@ -40,6 +40,14 @@ class Task {
             headers: this.headers
         });
     }
+
+    scoreDown(taskId) {
+        let data = querystring.stringify({});
+        return axios.post("https://habitica.com/api/v3/tasks/"+ taskId +"/score/down", data, {
+            headers: this.headers
+        });
+    }
+
 }
 
 module.exports = new Task();

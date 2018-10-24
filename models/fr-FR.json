@@ -89,6 +89,30 @@
                     "samples": [
                         "donne moi mes taches"
                     ]
+                },
+                {
+                    "name": "ScoreUpHabitIntent",
+                    "slots": [
+                        {
+                            "name": "habit",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "Valide l'habitude {habit}"
+                    ]
+                },
+                {
+                    "name": "ScoreDownHabitIntent",
+                    "slots": [
+                        {
+                            "name": "habit",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "Invalide l'habitude {habit}"
+                    ]
                 }
             ],
             "types": []

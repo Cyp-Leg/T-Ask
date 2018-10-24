@@ -21,6 +21,12 @@ class Habit {
             headers: this.headers
         });
     }
+
+    getHabits() {
+        return axios.get("https://habitica.com/api/v3/tasks/user?type=habits", {
+            headers: this.headers
+        });
+    }
 }
 
 module.exports = new Habit();
