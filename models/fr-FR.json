@@ -33,7 +33,7 @@
                     ]
                 },
                 {
-                    "name": "AddTaskIntent",
+                    "name": "AddTodoIntent",
                     "slots": [
                         {
                             "name": "task",
@@ -43,12 +43,14 @@
                     "samples": [
                         "Rajoute le todo {task}",
                         "Ajoute le todo {task}",
+                        "Ajoute la tache {task}",
+                        "Rajoute la tache {task}",
                         "Ajoute la tâche {task}",
                         "Rajoute la tâche {task}"
                     ]
                 },
                 {
-                    "name": "DelTaskIntent",
+                    "name": "DelTodoIntent",
                     "slots": [
                         {
                             "name": "task",
@@ -56,6 +58,10 @@
                         }
                     ],
                     "samples": [
+                        "Supprime la tache {task}",
+                        "Enleve la tache {task}",
+                        "Enlève la tache {task}",
+                        "Enleve la tâche {task}",
                         "Supprime la tâche {task}",
                         "Enlève la tâche {task}"
                     ]
@@ -88,7 +94,7 @@
                 },
 
                 {
-                    "name": "ScoreUpTaskIntent",
+                    "name": "ScoreUpTodoIntent",
                     "slots": [
                         {
                             "name": "task",
@@ -97,11 +103,13 @@
                     ],
                     "samples": [
                         "Valide la tâche {task}",
+                        "Valide la tache {task}",
+                        "J'ai fait la tache {task}",
                         "J'ai fait la tâche {task}"
                     ]
                 },
                 {
-                    "name": "GetTaskIntent",
+                    "name": "GetTodoIntent",
                     "slots": [],
                     "samples": [
                         "Donne-moi mes tâches"

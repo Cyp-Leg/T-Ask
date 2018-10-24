@@ -1,6 +1,6 @@
 const Alexa = require("alexa-sdk");
 const config = require("../config");
-const Task = require('../models/Task');
+const Todo = require('../models/Todo');
 const User = require('../models/User');
 const Habit = require('../models/Habit');
 var stringSimilarity = require('string-similarity');
@@ -11,11 +11,11 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
         this.emit(":responseReady");
     },
 
-    AddTaskIntent() {
+    AddTodoIntent() {
         var task = this.event.request.intent.slots.task.value
         let that = this;
         if(task){
-            Task.addTask(task)
+            Todo.addTodo(task)
             .then(function (response) {
                 that.emit(':ask', "La tâche : " + task + " a bien été ajoutée !", "Autre ?");
             })
@@ -28,11 +28,11 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
         }
     },
 
-    DelTaskIntent() {
+    DelTodoIntent() {
         var task = this.event.request.intent.slots.task.value
         let that = this;
         if(task){
-            Task.getTodos(task)
+            Todo.getTodos(task)
             .then(function(response){
                 let todos = response.data.data;
                 let todosText = todos.map(t => t.text);
@@ -40,7 +40,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
 
                 if(bestMatch.rating > 0.8){
                     let taskId = todos.filter(t => t.text == bestMatch.target)[0].id;
-                    Task.deleteTask(taskId)
+                    Todo.deleteTodo(taskId)
                     .then(function(response){
                         that.emit(':tell', "La tâche : "+ bestMatch.target +" a bien été supprimée !");
                     })
@@ -59,11 +59,11 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
         }
     },
 
-    ScoreUpTaskIntent() {
+    ScoreUpTodoIntent() {
         var task = this.event.request.intent.slots.task.value
         let that = this;
         if(task){
-            Task.getTodos(task)
+            Todo.getTodos(task)
             .then(function(response){
                 let todos = response.data.data;
                 let todosText = todos.map(t => t.text);
@@ -71,7 +71,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
 
                 if(bestMatch.rating > 0.8){
                     let taskId = todos.filter(t => t.text == bestMatch.target)[0].id;
-                    Task.scoreUp(taskId)
+                    Todo.scoreUp(taskId)
                     .then(function(response){
                         that.emit(':tell', "La tâche : "+ bestMatch.target +" a bien été validée !");
                     })
@@ -150,7 +150,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
 
                 if(bestMatch.rating > 0.8){
                     let taskId = habits.filter(h => h.text == bestMatch.target)[0].id;
-                    Task.scoreUp(taskId)
+                    Todo.scoreUp(taskId)
                     .then(function(response){
                         that.emit(':tell', "Le score de l'habitude : "+ bestMatch.target +" a bien été incrémenté !");
                     })
@@ -182,7 +182,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
 
                 if(bestMatch.rating > 0.8){
                     let taskId = habits.filter(h => h.text == bestMatch.target)[0].id;
-                    Task.scoreDown(taskId)
+                    Todo.scoreDown(taskId)
                     .then(function(response){
                         that.emit(':tell', "Le score de l'habitude : "+ bestMatch.target +" a bien été décrémentée !");
                     })
@@ -202,9 +202,9 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
     },
 
 
-    GetTaskIntent(){
+    GetTodoIntent(){
         let that = this;
-        User.getTasks()
+        Todo.getTodos()
         .then(function(response){
             that.response.speak("Voici votre liste de tâches : ");
             that.emit(':tell', response.map(t=>t.text))

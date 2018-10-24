@@ -1,7 +1,4 @@
 const Alexa = require('alexa-sdk');
-const Task = require('./models/Task');
-const User = require('./models/User');
-const Habit = require('./models/Habit');
 const config = require('./config');
 const apiSettings = require('ApiSettings');
 

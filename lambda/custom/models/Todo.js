@@ -2,7 +2,7 @@ const querystring = require('querystring');
 const axios = require('axios');
 const apiSettings = require('ApiSettings')
 
-class Task {
+class Todo {
 
     constructor(){
         this.headers = {
@@ -12,9 +12,9 @@ class Task {
         } 
     }
 
-    addTask(task) {
+    addTodo(todo) {
         let data = querystring.stringify({
-            text: task,
+            text: todo,
             type: 'todo'
         });
         return axios.post('https://habitica.com/api/v3/tasks/user', data, {
@@ -28,7 +28,7 @@ class Task {
         });
     }
 
-    deleteTask(taskId) {
+    deleteTodo(taskId) {
         return axios.delete('https://habitica.com/api/v3/tasks/'+ taskId, {
             headers: this.headers
         });
@@ -50,4 +50,4 @@ class Task {
 
 }
 
-module.exports = new Task();
+module.exports = new Todo();
