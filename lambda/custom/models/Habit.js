@@ -9,7 +9,7 @@ class Habit {
             'Content-Type': 'application/x-www-form-urlencoded',
             'x-api-user': apiSettings.user,
             'x-api-key': apiSettings.key
-        } 
+        }
     }
 
     addHabit(habit) {
@@ -18,6 +18,12 @@ class Habit {
             type: 'habit'
         });
         return axios.post('https://habitica.com/api/v3/tasks/user', data, {
+            headers: this.headers
+        });
+    }
+
+    deleteHabit(habitId) {
+        return axios.delete('https://habitica.com/api/v3/tasks/'+ habitId, {
             headers: this.headers
         });
     }

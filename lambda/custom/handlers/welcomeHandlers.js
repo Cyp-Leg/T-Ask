@@ -51,7 +51,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
                 else {
                     that.emit(':ask', "La tache n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
                 }
-                
+
             })
             .catch(function(error){
                 that.emit(':tell', "Impossible de récupérer vos tâches.");
@@ -59,7 +59,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
         }
     },
 
-    ScoreUpIntent() {
+    ScoreUpTaskIntent() {
         var task = this.event.request.intent.slots.task.value
         let that = this;
         if(task){
@@ -82,10 +82,58 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
                 else {
                     that.emit(':ask', "La tache n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
                 }
-                
+
             })
             .catch(function(error){
                 that.emit(':tell', "Impossible de récupérer vos tâches.");
+            })
+        }
+    },
+
+    AddHabitIntent() {
+        var habit = this.event.request.intent.slots.habit.value
+        let that = this;
+        if(habit){
+            Habit.addHabit(habit)
+            .then(function (response) {
+                that.emit(':tell', "L'habitude : " + habit + " a bien été ajoutée !");
+            })
+            .catch(function (error) {
+                that.emit(':tell', "L'habitude : " + habit + " n'a pas été ajoutée...");
+            });
+        }
+        else{
+            this.emit(':tell', "No habit");
+        }
+    },
+
+    DelHabitIntent() {
+        var task = this.event.request.intent.slots.habit.value
+        let that = this;
+        if(task){
+            Habit.getHabits(task)
+            .then(function(response){
+                let habits = response.data.data;
+                let habitsText = habits.map(h => h.text);
+                let bestMatch = stringSimilarity.findBestMatch(task, habitsText).bestMatch;
+
+                if(bestMatch.rating > 0.8){
+                    let habitId = habits.filter(h => h.text == bestMatch.target)[0].id;
+                    Habit.deleteHabit(habitId)
+                    .then(function(response){
+                        that.emit(':tell', "L'habitude : "+ bestMatch.target +" a bien été supprimée !");
+                    })
+                    .catch(function(error){
+                        that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
+                    });
+                }
+                else {
+                    that.emit(':ask', "L'habitude n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
+                }
+
+            })
+            .catch(function(error){
+                that.emit(':tell', "Impossible de récupérer vos habitudes." + error);
             })
         }
     },
@@ -113,7 +161,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
                 else {
                     that.emit(':ask', "La tache n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
                 }
-                
+
             })
             .catch(function(error){
                 that.emit(':tell', "Impossible de récupérer vos tâches.");
@@ -145,7 +193,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
                 else {
                     that.emit(':ask', "La tache n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
                 }
-                
+
             })
             .catch(function(error){
                 that.emit(':tell', "Impossible de récupérer vos tâches.");
@@ -166,22 +214,6 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
         })
     },
 
-    HabitIntent() {
-        var habit = this.event.request.intent.slots.habit.value
-        let that = this;
-        if(habit){
-            Habit.addHabit(habit)
-            .then(function (response) {
-                that.emit(':tell', "L'habitude : " + habit + " a bien été ajoutée !");
-            })
-            .catch(function (error) {
-                that.emit(':tell', "L'habitude : " + habit + " n'a pas été ajoutée...");
-            });
-        }
-        else{
-            this.emit(':tell', "No habit");
-        }
-    },
 
     // ==== Unhandled
     Unhandled() {

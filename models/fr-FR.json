@@ -60,7 +60,7 @@
                     ]
                 },
                 {
-                    "name": "HabitIntent",
+                    "name": "AddHabitIntent",
                     "slots": [
                         {
                             "name": "habit",
@@ -68,11 +68,26 @@
                         }
                     ],
                     "samples": [
-                        "rajoute l'habitude {habit}"
+                        "rajoute l'habitude {habit}",
+                        "ajoute l'habitude {habit}"
                     ]
                 },
                 {
-                    "name": "ScoreUpIntent",
+                    "name": "DelHabitIntent",
+                    "slots": [
+                        {
+                            "name": "habit",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "supprime l'habitude {habit}",
+                        "enlève l'habitude {habit}"
+                    ]
+                },
+
+                {
+                    "name": "ScoreUpTaskIntent",
                     "slots": [
                         {
                             "name": "task",
@@ -80,7 +95,8 @@
                         }
                     ],
                     "samples": [
-                        "valider la tache {task}"
+                        "valide la tache {task}",
+                        "j'ai fait la tache {task}"
                     ]
                 },
                 {
