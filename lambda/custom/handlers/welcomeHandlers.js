@@ -7,7 +7,7 @@ var stringSimilarity = require('string-similarity');
 
 const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
     Welcome() {
-        this.response.speak("Bienvenue sur habitica, que voulez-vous faire ?").listen();
+        this.response.speak("Bienvenue sur Habitica, que voulez-vous faire ?").listen();
         this.emit(":responseReady");
     },
 
@@ -17,14 +17,14 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
         if(task){
             Task.addTask(task)
             .then(function (response) {
-                that.emit(':ask', "La tache : " + task + " a bien été ajoutée !", "Autre ?");
+                that.emit(':ask', "La tâche : " + task + " a bien été ajoutée !", "Autre ?");
             })
             .catch(function (error) {
-                that.emit(':ask', "La tache : " + task + " n'a pas été ajoutée...", error.message);
+                that.emit(':ask', "La tâche : " + task + " n'a pas été ajoutée...", error.message);
             });
         }
         else{
-            this.emit(':ask', "Vous n'avez spécifiez aucune tâche.", "Aucune tâche spécifiée.");
+            this.emit(':ask', "Vous n'avez spécifié aucune tâche.", "Aucune tâche spécifiée.");
         }
     },
 
@@ -42,14 +42,14 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
                     let taskId = todos.filter(t => t.text == bestMatch.target)[0].id;
                     Task.deleteTask(taskId)
                     .then(function(response){
-                        that.emit(':tell', "La tache : "+ bestMatch.target +" a bien été supprimée !");
+                        that.emit(':tell', "La tâche : "+ bestMatch.target +" a bien été supprimée !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
                     });
                 }
                 else {
-                    that.emit(':ask', "La tache n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
+                    that.emit(':ask', "La tâche n'a pas été trouvée. Peut-être que vous vouliez dire : " + bestMatch.target + " ?", "");
                 }
 
             })
@@ -73,14 +73,14 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
                     let taskId = todos.filter(t => t.text == bestMatch.target)[0].id;
                     Task.scoreUp(taskId)
                     .then(function(response){
-                        that.emit(':tell', "La tache : "+ bestMatch.target +" a bien été validée !");
+                        that.emit(':tell', "La tâche : "+ bestMatch.target +" a bien été validée !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
                     });
                 }
                 else {
-                    that.emit(':ask', "La tache n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
+                    that.emit(':ask', "La tâche n'a pas été trouvée. Peut-être que vous vouliez dire : " + bestMatch.target + " ?", "");
                 }
 
             })
@@ -128,7 +128,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
                     });
                 }
                 else {
-                    that.emit(':ask', "L'habitude n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
+                    that.emit(':ask', "L'habitude n'a pas été trouvée. Peut-être que vous vouliez dire : " + bestMatch.target + " ?", "");
                 }
 
             })
@@ -145,11 +145,11 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
             Habit.getHabits(task)
             .then(function(response){
                 let habits = response.data.data;
-                let habitText = habits.map(t => t.text);
+                let habitText = habits.map(h => h.text);
                 let bestMatch = stringSimilarity.findBestMatch(task, habitText).bestMatch;
 
                 if(bestMatch.rating > 0.8){
-                    let taskId = habits.filter(t => t.text == bestMatch.target)[0].id;
+                    let taskId = habits.filter(h => h.text == bestMatch.target)[0].id;
                     Task.scoreUp(taskId)
                     .then(function(response){
                         that.emit(':tell', "Le score de l'habitude : "+ bestMatch.target +" a bien été incrémenté !");
@@ -159,12 +159,12 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
                     });
                 }
                 else {
-                    that.emit(':ask', "La tache n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
+                    that.emit(':ask', "L'habitude n'a pas été trouvée. Peut-être que vous vouliez dire : " + bestMatch.target + " ?", "");
                 }
 
             })
             .catch(function(error){
-                that.emit(':tell', "Impossible de récupérer vos tâches.");
+                that.emit(':tell', "Impossible de récupérer vos habitudes.");
             })
         }
     },
@@ -177,11 +177,11 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
             Habit.getHabits(task)
             .then(function(response){
                 let habits = response.data.data;
-                let habitText = habits.map(t => t.text);
+                let habitText = habits.map(h => h.text);
                 let bestMatch = stringSimilarity.findBestMatch(task, habitText).bestMatch;
 
                 if(bestMatch.rating > 0.8){
-                    let taskId = habits.filter(t => t.text == bestMatch.target)[0].id;
+                    let taskId = habits.filter(h => h.text == bestMatch.target)[0].id;
                     Task.scoreDown(taskId)
                     .then(function(response){
                         that.emit(':tell', "Le score de l'habitude : "+ bestMatch.target +" a bien été décrémentée !");
@@ -191,12 +191,12 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
                     });
                 }
                 else {
-                    that.emit(':ask', "La tache n'a pas été trouvée. Peut être que vous vouliez dire : " + bestMatch.target + " ?", "");
+                    that.emit(':ask', "L'habitude n'a pas été trouvée. Peut-être que vous vouliez dire : " + bestMatch.target + " ?", "");
                 }
 
             })
             .catch(function(error){
-                that.emit(':tell', "Impossible de récupérer vos tâches.");
+                that.emit(':tell', "Impossible de récupérer vos habitudes.");
             })
         }
     },
@@ -210,7 +210,7 @@ const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
             that.emit(':tell', response.map(t=>t.text))
         })
         .catch(function(error){
-            that.response.speak("Impossible d'accéder à la liste de vos taches... Erreur : " + error);
+            that.response.speak("Impossible d'accéder à la liste de vos tâches... Erreur : " + error);
         })
     },
 

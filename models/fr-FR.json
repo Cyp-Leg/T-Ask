@@ -11,7 +11,7 @@
                     "name": "AMAZON.HelpIntent",
                     "samples": [
                         "Qu'est-ce que je peux faire",
-                        "Aide moi"
+                        "Aide-moi"
                     ]
                 },
                 {
@@ -41,10 +41,10 @@
                         }
                     ],
                     "samples": [
-                        "rajoute le todo {task}",
-                        "ajoute le todo {task}",
-                        "ajoute la tache {task}",
-                        "rajoute la tache {task}"
+                        "Rajoute le todo {task}",
+                        "Ajoute le todo {task}",
+                        "Ajoute la tâche {task}",
+                        "Rajoute la tâche {task}"
                     ]
                 },
                 {
@@ -56,7 +56,8 @@
                         }
                     ],
                     "samples": [
-                        "supprime la tache {task}"
+                        "Supprime la tâche {task}",
+                        "Enlève la tâche {task}"
                     ]
                 },
                 {
@@ -68,8 +69,8 @@
                         }
                     ],
                     "samples": [
-                        "rajoute l'habitude {habit}",
-                        "ajoute l'habitude {habit}"
+                        "Rajoute l'habitude {habit}",
+                        "Ajoute l'habitude {habit}"
                     ]
                 },
                 {
@@ -81,8 +82,8 @@
                         }
                     ],
                     "samples": [
-                        "supprime l'habitude {habit}",
-                        "enlève l'habitude {habit}"
+                        "Supprime l'habitude {habit}",
+                        "Enlève l'habitude {habit}"
                     ]
                 },
 
@@ -95,15 +96,15 @@
                         }
                     ],
                     "samples": [
-                        "valide la tache {task}",
-                        "j'ai fait la tache {task}"
+                        "Valide la tâche {task}",
+                        "J'ai fait la tâche {task}"
                     ]
                 },
                 {
                     "name": "GetTaskIntent",
                     "slots": [],
                     "samples": [
-                        "donne moi mes taches"
+                        "Donne-moi mes tâches"
                     ]
                 },
                 {
