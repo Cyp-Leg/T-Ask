@@ -15,24 +15,28 @@ class Task {
     addTask(task) {
         let data = querystring.stringify({
             text: task,
-            type: 'todo',
-            alias: task.replace(" ","")
+            type: 'todo'
         });
         return axios.post('https://habitica.com/api/v3/tasks/user', data, {
             headers: this.headers
         });
     }
 
-    deleteTask(task) {
-        let data = task.replace(" ","")
-        return axios.delete('https://habitica.com/api/v3/tasks/'+ data, {
+    getTodos() {
+        return axios.get("https://habitica.com/api/v3/tasks/user?type=todos", {
             headers: this.headers
         });
     }
 
-    scoreUp(task) {
+    deleteTask(taskId) {
+        return axios.delete('https://habitica.com/api/v3/tasks/'+ taskId, {
+            headers: this.headers
+        });
+    }
+
+    scoreUp(taskId) {
         let data = querystring.stringify({});
-        return axios.post("https://habitica.com/api/v3/tasks/"+ task +"/score/up", data, {
+        return axios.post("https://habitica.com/api/v3/tasks/"+ taskId +"/score/up", data, {
             headers: this.headers
         });
     }
