@@ -20,6 +20,16 @@ class User {
             headers: this.headers
         }); 
     }
+
+    login(usrname,pwd){
+        let data = querystring.stringify({
+            username: usrname,
+            password: pwd
+        })
+        return axios.post('https://habitica.com/api/v3/user/auth/local/login', data, {
+            header: 'Content-Type: application/x-www-form-urlencoded'
+        });
+    }
 }
 
 module.exports = new User();

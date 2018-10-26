@@ -185,6 +185,30 @@
                     "samples": [
                         "Annule la quotidienne {daily}"
                     ]
+                },
+                {
+                    "name": "SetUsernameIntent",
+                    "slots": [
+                        {
+                            "name": "usrname",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "Mon nom d'utilisateur est {usrname}"
+                    ]
+                },
+                {
+                    "name": "SetPasswordIntent",
+                    "slots": [
+                        {
+                            "name": "pwd",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "Mon mot de passe est {pwd}"
+                    ]
                 }
             ],
             "types": []
