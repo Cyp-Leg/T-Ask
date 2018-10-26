@@ -1,11 +1,17 @@
 const Alexa = require("alexa-sdk");
 const config = require("../config");
-var handlers = require('./handlers')
+const Todo = require('../models/Todo');
+const User = require('../models/User');
+const Daily = require('../models/Daily');
+const Habit = require('../models/Habit');
+var stringSimilarity = require('string-similarity');
+var ApiSettings = require('../ApiSettings');
+const util = require('util')
 
-var username = "test";
-var password = "test";
 
-const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, Object.assign({
+const welcomeHandlers = Alexa.CreateStateHandler(config.WELCOME_STATE, {
+    
+
     Welcome() {
         this.response.speak("Bienvenue sur Habitica, que voulez-vous faire ?").listen();
         this.emit(":responseReady");
