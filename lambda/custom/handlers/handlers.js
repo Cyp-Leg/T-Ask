@@ -323,19 +323,18 @@ const handlers = {
         this.emit(":ask", speechOutput, speechOutput);
     },
     'AMAZON.HelpIntent': function () {
-        const speechOutput = HELP_MESSAGE;
-        const reprompt = HELP_REPROMPT;
-
-        this.response.speak(speechOutput).listen(reprompt);
-        this.emit(':responseReady');
+        this.emit(
+            ':ask',
+            "Vous pouvez lire vos tâches, vos quotidiennes ou vos habitudes. Vous pouvez aussi en ajouter, en supprimer ou en valider.",
+            "Réessayez."
+        );
     },
     'AMAZON.CancelIntent': function () {
-        this.response.speak(STOP_MESSAGE);
+        this.response.speak("Annuler");
         this.emit(':responseReady');
     },
     'AMAZON.StopIntent': function () {
-        this.response.speak(STOP_MESSAGE);
-        this.emit(':responseReady');
+        this.emit(':tell', "Au revoir !");
     }
 }
 
