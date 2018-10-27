@@ -1,6 +1,6 @@
 const querystring = require('querystring');
 const axios = require('axios');
-const apiSettings = require('ApiSettings')
+let apiSettings = require('ApiSettings')
 
 class Daily {
 

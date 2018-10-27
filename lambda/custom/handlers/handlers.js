@@ -1,39 +1,9 @@
 const Todo = require('../models/Todo');
-const User = require('../models/User');
 const Daily = require('../models/Daily');
 const Habit = require('../models/Habit');
 var stringSimilarity = require('string-similarity');
-var ApiSettings = require('../ApiSettings');
 
 const handlers = {
-    SetUsernameIntent() {
-        var usrname = this.event.request.intent.slots.usrname.value
-        if(usrname){
-            ApiSettings.username=usrname;
-            this.response.speak().listen();
-            this.emit(":ask", "Veuillez maintenant entrer votre mot de passe.", "Réessayez.");
-        }
-        else{
-            this.emit(':ask', "Je n'ai pas compris votre nom d'utilisatreur.", "Aucune tâche spécifiée.");
-        }
-    },
-
-    SetPasswordIntent() {
-        var pwd = this.event.request.intent.slots.pwd.value
-        let that = this;
-        if(pwd){
-            ApiSettings.password=pwd;
-            User.login(ApiSettings.username,ApiSettings.password).then((response)=>{
-                const credentials = response;
-                this.emit(':tell', "Votre userId est "+credentials.data.data.id+", votre clé API est "+credentials.data.data.apiToken)
-            }).catch((err)=>{
-                this.emit(':tell', "Il y a eu une erreur : " + err)
-            })
-        }
-        else{
-            this.emit(':ask', "Je n'ai pas compris votre nom d'utilisatreur.", "Aucune tâche spécifiée.");
-        }
-    },
 
     AddTodoIntent() {
         var task = this.event.request.intent.slots.task.value
@@ -350,8 +320,7 @@ const handlers = {
     // ==== Unhandled
     Unhandled() {
         let speechOutput = "Je n'ai pas compris votre demande.";
-        this.response.speak(speechOutput).listen(speechOutput);
-        this.emit(":responseReady");
+        this.emit(":ask", speechOutput, speechOutput);
     },
     'AMAZON.HelpIntent': function () {
         const speechOutput = HELP_MESSAGE;

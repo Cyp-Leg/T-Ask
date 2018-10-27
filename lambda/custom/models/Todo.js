@@ -1,11 +1,11 @@
 const querystring = require('querystring');
 const axios = require('axios');
-const apiSettings = require('ApiSettings')
+let apiSettings = require('ApiSettings')
 
 class Todo {
 
-    constructor(){
-        this.headers = {
+    getHeaders(){
+        return {
             'Content-Type': 'application/x-www-form-urlencoded',
             'x-api-user': apiSettings.user,
             'x-api-key': apiSettings.key
@@ -18,33 +18,33 @@ class Todo {
             type: 'todo'
         });
         return axios.post('https://habitica.com/api/v3/tasks/user', data, {
-            headers: this.headers
+            headers: this.getHeaders()
         });
     }
 
     getTodos() {
         return axios.get("https://habitica.com/api/v3/tasks/user?type=todos", {
-            headers: this.headers
+            headers: this.getHeaders()
         });
     }
 
     deleteTodo(taskId) {
         return axios.delete('https://habitica.com/api/v3/tasks/'+ taskId, {
-            headers: this.headers
+            headers: this.getHeaders()
         });
     }
 
     scoreUp(taskId) {
         let data = querystring.stringify({});
         return axios.post("https://habitica.com/api/v3/tasks/"+ taskId +"/score/up", data, {
-            headers: this.headers
+            headers: this.getHeaders()
         });
     }
 
     scoreDown(taskId) {
         let data = querystring.stringify({});
         return axios.post("https://habitica.com/api/v3/tasks/"+ taskId +"/score/down", data, {
-            headers: this.headers
+            headers: this.getHeaders()
         });
     }
 
