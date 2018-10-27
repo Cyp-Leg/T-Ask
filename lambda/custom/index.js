@@ -7,10 +7,6 @@ const handlers = require('./handlers/handlers');
 
 const APP_ID = apiSettings.appId;
 
-const HELP_MESSAGE = 'You can say tell me a space fact, or, you can say exit... What can I help you with?';
-const HELP_REPROMPT = 'What can I help you with?';
-const STOP_MESSAGE = 'Goodbye!';
-
 const firstHandlers = Object.assign({
     LaunchRequest: function () {
         this.handler.state = config.WELCOME_STATE
