@@ -257,7 +257,7 @@ const handlers = {
                     let taskId = dailys.filter(h => h.text == bestMatch.target)[0].id;
                     Todo.scoreUp(taskId)
                     .then(function(response){
-                        that.emit(':tell', "Le score de la quotidienne : "+ bestMatch.target +" a bien été incrémenté !");
+                        that.emit(':tell', "La quotidienne : "+ bestMatch.target +" a bien été validé pour aujourd'hui !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
@@ -288,7 +288,7 @@ const handlers = {
                     let taskId = dailys.filter(h => h.text == bestMatch.target)[0].id;
                     Todo.scoreDown(taskId)
                     .then(function(response){
-                        that.emit(':tell', "Le score de la quotidienne : "+ bestMatch.target +" a bien été décrémentée !");
+                        that.emit(':tell', "La quotidienne : "+ bestMatch.target +" a bien été invalidée !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
