@@ -257,7 +257,7 @@ const handlers = {
                     let taskId = dailys.filter(h => h.text == bestMatch.target)[0].id;
                     Todo.scoreUp(taskId)
                     .then(function(response){
-                        that.emit(':tell', "La quotidienne : "+ bestMatch.target +" a bien été validé pour aujourd'hui !");
+                        that.emit(':tell', "Le score de la quotidienne : "+ bestMatch.target +" a bien été incrémenté !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
@@ -288,7 +288,7 @@ const handlers = {
                     let taskId = dailys.filter(h => h.text == bestMatch.target)[0].id;
                     Todo.scoreDown(taskId)
                     .then(function(response){
-                        that.emit(':tell', "La quotidienne : "+ bestMatch.target +" a bien été invalidée !");
+                        that.emit(':tell', "Le score de la quotidienne : "+ bestMatch.target +" a bien été décrémentée !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
@@ -309,19 +309,11 @@ const handlers = {
         let that = this;
         Todo.getTodos()
         .then(function(response){
-            let speach = "Voici votre liste de tâches : ";
-
-            let todos = response.data.data;
-            todos.forEach((todo,index) => {
-                if(index != 0 ) speach += ", "+ todo.text
-                else speach += todo.text
-            });
-            speach += ".";
-            
-            that.emit(':ask', speach, "Répétez.")
+            that.response.speak("Voici votre liste de tâches : ");
+            that.emit(':tell', response.map(t=>t.text))
         })
         .catch(function(error){
-            that.emit(":ask", "Impossible d'accéder à la liste de vos tâches... Erreur : " + error, "Répétez.");
+            that.response.speak("Impossible d'accéder à la liste de vos tâches... Erreur : " + error);
         })
     },
 

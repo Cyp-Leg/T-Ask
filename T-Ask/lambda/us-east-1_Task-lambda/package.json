@@ -1,0 +1,14 @@
+{
+  "name": "alexa-skill-kit-sdk-factskill",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "alexa-sdk": "^1.0.25",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "querystring": "^0.2.0",
+    "string-similarity": "^2.0.0"
+  }
+}
