@@ -23,7 +23,7 @@ const loginHandlers = Alexa.CreateStateHandler(config.LOGIN_STATE, Object.assign
                     const credentials = response.data.data;
                     ApiSettings.user = credentials.id;
                     ApiSettings.key = credentials.apiToken;
-                    that.emit(':ask', "Vous êtes connecté, bienvenu sur Habitica. Que voulez-vous faire ?");
+                    that.emit(':ask', "Vous êtes connecté, bienvenue sur Habitica. Que voulez-vous faire ?");
                 })
                 .catch((err)=>{
                     that.emit(':tell', "Il y a eu une erreur : " + err)
@@ -47,7 +47,7 @@ const loginHandlers = Alexa.CreateStateHandler(config.LOGIN_STATE, Object.assign
                     const credentials = response.data.data;
                     ApiSettings.user = credentials.id;
                     ApiSettings.key = credentials.apiToken;
-                    that.emit(':ask', "Vous êtes connecté, bienvenu sur Habitica. Que voulez-vous faire ?");
+                    that.emit(':ask', "Vous êtes connecté, bienvenue sur Habitica. Que voulez-vous faire ?");
                 })
                 .catch((err)=>{
                     that.emit(':tell', "Il y a eu une erreur : " + err)

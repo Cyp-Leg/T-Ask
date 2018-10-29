@@ -310,7 +310,9 @@ const handlers = {
         Todo.getTodos()
         .then(function(response){
             that.response.speak("Voici votre liste de tâches : ");
-            that.emit(':tell', response.map(t=>t.text))
+            for(var i=0;i<response.data.data.length;i++){
+                that.emit(':tell', response.data.data[i].text);
+            }
         })
         .catch(function(error){
             that.response.speak("Impossible d'accéder à la liste de vos tâches... Erreur : " + error);

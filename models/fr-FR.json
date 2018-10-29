@@ -113,7 +113,10 @@
                     "name": "GetTodoIntent",
                     "slots": [],
                     "samples": [
-                        "Donne-moi mes tâches"
+                        "Donne-moi mes tâches",
+                        "Qu'est-ce qu'il me reste à faire?",
+                        "Quels sont mes to do?",
+                        "Quelles sont mes tâches?"
                     ]
                 },
                 {
