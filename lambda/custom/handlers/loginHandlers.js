@@ -9,7 +9,7 @@ const loginHandlers = Alexa.CreateStateHandler(config.LOGIN_STATE, Object.assign
     Welcome() {
         this.emit(
             ":ask",
-            "Pour vous connecter à habitica, indiquez votre pseudo et votre mot de passe, un par un.",
+            "Pour vous connecter à habitica, indiquez votre pseudo et votre mot de passe, un par un. <emphasis level='strong'>Mon pseudo est ...</emphasis>",
             "Répétez."
         );
     },
@@ -18,7 +18,7 @@ const loginHandlers = Alexa.CreateStateHandler(config.LOGIN_STATE, Object.assign
         if(usrname){
             ApiSettings.username = usrname;
             if(ApiSettings.password){
-                User.login(ApiSettings.username,ApiSettings.password)
+                User.login(ApiSettings.username, ApiSettings.password)
                 .then((response)=>{
                     const credentials = response.data.data;
                     ApiSettings.user = credentials.id;
@@ -29,7 +29,7 @@ const loginHandlers = Alexa.CreateStateHandler(config.LOGIN_STATE, Object.assign
                     that.emit(':tell', "Il y a eu une erreur : " + err)
                 })
             }
-            this.emit(":ask", "Très bien, il manque cependant encore votre mot de passe.", "Réessayez.");
+            this.emit(":ask", "Très bien, il manque cependant encore votre mot de passe. <emphasis level='strong'>Mon mot de passe est ...</emphasis>", "Réessayez.");
         }
         else{
             this.emit(':ask', "Je n'ai pas compris votre nom d'utilisatreur.", "Aucune tâche spécifiée.");
@@ -41,7 +41,7 @@ const loginHandlers = Alexa.CreateStateHandler(config.LOGIN_STATE, Object.assign
         if(pwd){
             ApiSettings.password = pwd;
             if(ApiSettings.username){
-                User.login(ApiSettings.username,ApiSettings.password)
+                User.login(ApiSettings.username, ApiSettings.password)
                 .then((response)=>{
                     this.handler.state = config.WELCOME_STATE
                     const credentials = response.data.data;
@@ -54,7 +54,7 @@ const loginHandlers = Alexa.CreateStateHandler(config.LOGIN_STATE, Object.assign
                 })
             }
             else {
-                this.emit(":ask", "Très bien, il manque cependant encore votre pseudo.", "Réessayez.");
+                this.emit(":ask", "Très bien, il manque cependant encore votre pseudo. <emphasis level='strong'>Mon pseudo est ...</emphasis>", "Réessayez.");
             }
         }
         else{

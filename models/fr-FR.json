@@ -10,6 +10,7 @@
                 {
                     "name": "AMAZON.HelpIntent",
                     "samples": [
+                        "Je peux faire quoi",
                         "Aide",
                         "Qu'est-ce que je peux faire",
                         "Aide-moi"
@@ -113,12 +114,9 @@
                     "name": "GetTodoIntent",
                     "slots": [],
                     "samples": [
-                        "Donne moi mes tâches",
-                        "Quelles sont mes tâches",
-                        "Quels sont mes todo",
-                        "Dis moi ce qu'il me reste à faire",
-                        "Qu'est-ce qu'il me reste à faire",
-                        "Donne-moi mes taches"
+                        "Qu'est ce qu'il me reste à faire",
+                        "Quels sont mes taches",
+                        "Donne-moi mes tâches"
                     ]
                 },
                 {
@@ -154,6 +152,8 @@
                         }
                     ],
                     "samples": [
+                        "ajoute la tache {daily} tous les jours",
+                        "Rajoute la quotidienne {daily}",
                         "Ajoute la quotidienne {daily}"
                     ]
                 },
@@ -220,6 +220,15 @@
                         "Mot de passe {pwd}",
                         "Mot de passe est {pwd}",
                         "Mon mot de passe est {pwd}"
+                    ]
+                },
+                {
+                    "name": "LogOutIntent",
+                    "slots": [],
+                    "samples": [
+                        "Changer de compte",
+                        "Deconnecte moi",
+                        "Deconnexion"
                     ]
                 }
             ],

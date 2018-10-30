@@ -1,11 +1,16 @@
 const Todo = require('../models/Todo');
 const Daily = require('../models/Daily');
 const Habit = require('../models/Habit');
+const config = require("../config");
+var ApiSettings = require("./../ApiSettings")
 var stringSimilarity = require('string-similarity');
 
 const handlers = {
-
     AddTodoIntent() {
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         var task = this.event.request.intent.slots.task.value
         let that = this;
         if(task){
@@ -23,6 +28,10 @@ const handlers = {
     },
 
     DelTodoIntent() {
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         var task = this.event.request.intent.slots.task.value
         let that = this;
         if(task){
@@ -54,6 +63,10 @@ const handlers = {
     },
 
     ScoreUpTodoIntent() {
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         var task = this.event.request.intent.slots.task.value
         let that = this;
         if(task){
@@ -85,6 +98,10 @@ const handlers = {
     },
 
     AddHabitIntent() {
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         var habit = this.event.request.intent.slots.habit.value
         let that = this;
         if(habit){
@@ -102,6 +119,10 @@ const handlers = {
     },
 
     DelHabitIntent() {
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         var task = this.event.request.intent.slots.habit.value
         let that = this;
         if(task){
@@ -133,6 +154,10 @@ const handlers = {
     },
 
     ScoreUpHabitIntent() {
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         var task = this.event.request.intent.slots.habit.value
         let that = this;
         if(task){
@@ -164,6 +189,10 @@ const handlers = {
     },
 
     ScoreDownHabitIntent() {
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         var task = this.event.request.intent.slots.habit.value
         let that = this;
         if(task){
@@ -196,12 +225,16 @@ const handlers = {
     
     //DAILYS
     AddDailyIntent() {
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         var daily = this.event.request.intent.slots.daily.value
         let that = this;
         if(daily){
             Daily.addDaily(daily)
             .then(function (response) {
-                that.emit(':tell', "La tâche quotidienne : " + daily + " a bien été ajoutée !");
+                that.emit(':ask', "La tâche quotidienne : " + daily + " a bien été ajoutée !", "Répétez.");
             })
             .catch(function (error) {
                 that.emit(':tell', "La tâche quotidienne : " + daily + " n'a pas été ajoutée...");
@@ -213,6 +246,10 @@ const handlers = {
     },
 
     DelDailyIntent() {
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         var daily = this.event.request.intent.slots.daily.value
         let that = this;
         if(daily){
@@ -244,6 +281,10 @@ const handlers = {
     },
 
     ScoreUpDailyIntent() {
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         var task = this.event.request.intent.slots.daily.value
         let that = this;
         if(task){
@@ -275,6 +316,10 @@ const handlers = {
     },
 
     ScoreDownDailyIntent() {
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         var task = this.event.request.intent.slots.daily.value
         let that = this;
         if(task){
@@ -306,6 +351,10 @@ const handlers = {
     },
 
     GetTodoIntent(){
+        if(!ApiSettings.user || !ApiSettings.key){
+            this.handler.state = config.LOGIN_STATE
+            this.emitWithState('Welcome')
+        }
         let that = this;
         Todo.getTodos()
         .then(function(response){
@@ -323,6 +372,11 @@ const handlers = {
         .catch(function(error){
             that.emit(":ask", "Impossible d'accéder à la liste de vos tâches... Erreur : " + error, "Répétez.");
         })
+    },
+    LogOutIntent(){
+        ApiSettings = {}
+        this.handler.state = config.LOGIN_STATE
+        this.emitWithState('Welcome')
     },
 
     // ==== Unhandled
