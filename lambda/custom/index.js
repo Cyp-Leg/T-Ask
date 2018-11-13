@@ -8,7 +8,7 @@ const handlers = require('./handlers/handlers');
 
 const APP_ID = apiSettings.appId;
 
-const firstHandlers = Object.assign({
+const firstHandlers = {
     LaunchRequest: function () {
         if(apiSettings.user && apiSettings.key){
             this.handler.state = config.WELCOME_STATE
@@ -19,7 +19,7 @@ const firstHandlers = Object.assign({
             this.emitWithState('Welcome')
         }
     }
-}, handlers);
+};
 
 exports.handler = function (event, context, callback) {
     const alexa = Alexa.handler(event, context, callback);

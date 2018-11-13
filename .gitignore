@@ -1,4 +1,5 @@
 .ask
+.idea
 node_modules
 skill.json
 lambda/custom/ApiSettings.js
