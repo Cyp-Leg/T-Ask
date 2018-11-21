@@ -153,6 +153,7 @@
                     ],
                     "samples": [
                         "ajoute la tache {daily} tous les jours",
+                        "rajoute la tache {daily} tous les jours",
                         "Rajoute la quotidienne {daily}",
                         "Ajoute la quotidienne {daily}"
                     ]

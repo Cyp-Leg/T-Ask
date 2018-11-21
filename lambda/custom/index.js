@@ -24,6 +24,6 @@ const firstHandlers = {
 exports.handler = function (event, context, callback) {
     const alexa = Alexa.handler(event, context, callback);
     alexa.appId = APP_ID;
-    alexa.registerHandlers(firstHandlers, welcomeHandlers, loginHandlers);
+    alexa.registerHandlers(handlers, welcomeHandlers);
     alexa.execute();
 };

@@ -45,7 +45,7 @@ const handlers = {
                     let taskId = todos.filter(t => t.text == bestMatch.target)[0].id;
                     Todo.deleteTodo(taskId)
                     .then(function(response){
-                        that.emit(':tell', "La tâche : "+ bestMatch.target +" a bien été supprimée !");
+                        that.emit(':ask', "La tâche : "+ bestMatch.target +" a bien été supprimée !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
@@ -57,7 +57,7 @@ const handlers = {
 
             })
             .catch(function(error){
-                that.emit(':tell', "Impossible de récupérer vos tâches.");
+                that.emit(':ask', "Impossible de récupérer vos tâches.");
             })
         }
     },
@@ -80,7 +80,7 @@ const handlers = {
                     let taskId = todos.filter(t => t.text == bestMatch.target)[0].id;
                     Todo.scoreUp(taskId)
                     .then(function(response){
-                        that.emit(':tell', "La tâche : "+ bestMatch.target +" a bien été validée !");
+                        that.emit(':ask', "La tâche : "+ bestMatch.target +" a bien été validée !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
@@ -92,7 +92,7 @@ const handlers = {
 
             })
             .catch(function(error){
-                that.emit(':tell', "Impossible de récupérer vos tâches.");
+                that.emit(':ask', "Impossible de récupérer vos tâches.");
             })
         }
     },
@@ -107,14 +107,14 @@ const handlers = {
         if(habit){
             Habit.addHabit(habit)
             .then(function (response) {
-                that.emit(':tell', "L'habitude : " + habit + " a bien été ajoutée !");
+                that.emit(':ask', "L'habitude : " + habit + " a bien été ajoutée !");
             })
             .catch(function (error) {
-                that.emit(':tell', "L'habitude : " + habit + " n'a pas été ajoutée...");
+                that.emit(':ask', "L'habitude : " + habit + " n'a pas été ajoutée...");
             });
         }
         else{
-            this.emit(':tell', "No habit");
+            this.emit(':ask', "No habit");
         }
     },
 
@@ -136,7 +136,7 @@ const handlers = {
                     let habitId = habits.filter(h => h.text == bestMatch.target)[0].id;
                     Habit.deleteHabit(habitId)
                     .then(function(response){
-                        that.emit(':tell', "L'habitude : "+ bestMatch.target +" a bien été supprimée !");
+                        that.emit(':ask', "L'habitude : "+ bestMatch.target +" a bien été supprimée !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
@@ -148,7 +148,7 @@ const handlers = {
 
             })
             .catch(function(error){
-                that.emit(':tell', "Impossible de récupérer vos habitudes." + error);
+                that.emit(':ask', "Impossible de récupérer vos habitudes." + error);
             })
         }
     },
@@ -171,7 +171,7 @@ const handlers = {
                     let taskId = habits.filter(h => h.text == bestMatch.target)[0].id;
                     Todo.scoreUp(taskId)
                     .then(function(response){
-                        that.emit(':tell', "Le score de l'habitude : "+ bestMatch.target +" a bien été incrémenté !");
+                        that.emit(':ask', "Le score de l'habitude : "+ bestMatch.target +" a bien été incrémenté !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
@@ -183,7 +183,7 @@ const handlers = {
 
             })
             .catch(function(error){
-                that.emit(':tell', "Impossible de récupérer vos habitudes.");
+                that.emit(':ask', "Impossible de récupérer vos habitudes.");
             })
         }
     },
@@ -206,7 +206,7 @@ const handlers = {
                     let taskId = habits.filter(h => h.text == bestMatch.target)[0].id;
                     Todo.scoreDown(taskId)
                     .then(function(response){
-                        that.emit(':tell', "Le score de l'habitude : "+ bestMatch.target +" a bien été décrémentée !");
+                        that.emit(':ask', "Le score de l'habitude : "+ bestMatch.target +" a bien été décrémentée !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
@@ -218,7 +218,7 @@ const handlers = {
 
             })
             .catch(function(error){
-                that.emit(':tell', "Impossible de récupérer vos habitudes.");
+                that.emit(':ask', "Impossible de récupérer vos habitudes.");
             })
         }
     },
@@ -237,11 +237,11 @@ const handlers = {
                 that.emit(':ask', "La tâche quotidienne : " + daily + " a bien été ajoutée !", "Répétez.");
             })
             .catch(function (error) {
-                that.emit(':tell', "La tâche quotidienne : " + daily + " n'a pas été ajoutée...");
+                that.emit(':ask', "La tâche quotidienne : " + daily + " n'a pas été ajoutée...");
             });
         }
         else{
-            this.emit(':tell', "Aucune tâche quotidienne ajoutée");
+            this.emit(':ask', "Aucune tâche quotidienne ajoutée");
         }
     },
 
@@ -263,7 +263,7 @@ const handlers = {
                     let dailyId = dailys.filter(h => h.text == bestMatch.target)[0].id;
                     Daily.deleteDaily(dailyId)
                     .then(function(response){
-                        that.emit(':tell', "La tâche quotidienne : "+ bestMatch.target +" a bien été supprimée !");
+                        that.emit(':ask', "La tâche quotidienne : "+ bestMatch.target +" a bien été supprimée !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
@@ -275,7 +275,7 @@ const handlers = {
 
             })
             .catch(function(error){
-                that.emit(':tell', "Impossible de récupérer vos tâches quotidiennes." + error);
+                that.emit(':ask', "Impossible de récupérer vos tâches quotidiennes." + error);
             })
         }
     },
@@ -298,7 +298,7 @@ const handlers = {
                     let taskId = dailys.filter(h => h.text == bestMatch.target)[0].id;
                     Todo.scoreUp(taskId)
                     .then(function(response){
-                        that.emit(':tell', "La quotidienne : "+ bestMatch.target +" a bien été validé pour aujourd'hui !");
+                        that.emit(':ask', "La quotidienne : "+ bestMatch.target +" a bien été validé pour aujourd'hui !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
@@ -310,7 +310,7 @@ const handlers = {
 
             })
             .catch(function(error){
-                that.emit(':tell', "Impossible de récupérer vos quotidiennes.");
+                that.emit(':ask', "Impossible de récupérer vos quotidiennes.");
             })
         }
     },
@@ -333,7 +333,7 @@ const handlers = {
                     let taskId = dailys.filter(h => h.text == bestMatch.target)[0].id;
                     Todo.scoreDown(taskId)
                     .then(function(response){
-                        that.emit(':tell', "La quotidienne : "+ bestMatch.target +" a bien été invalidée !");
+                        that.emit(':ask', "La quotidienne : "+ bestMatch.target +" a bien été invalidée !");
                     })
                     .catch(function(error){
                         that.emit(':ask', "Une erreur s'est produite sur Habitica.", error.message);
@@ -345,7 +345,7 @@ const handlers = {
 
             })
             .catch(function(error){
-                that.emit(':tell', "Impossible de récupérer vos quotidiennes.");
+                that.emit(':ask', "Impossible de récupérer vos quotidiennes.");
             })
         }
     },
